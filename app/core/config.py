@@ -1,8 +1,8 @@
 import os
-from typing import List
+from typing import ClassVar, List
 
 from dotenv import load_dotenv
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 load_dotenv()
 
@@ -48,7 +48,7 @@ class Configs(BaseSettings):
 
     DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
 
-    DATABASE_URI = DATABASE_URI_FORMAT.format(
+    DATABASE_URI: str = DATABASE_URI_FORMAT.format(
         db_engine=DB_ENGINE,
         user=DB_USER,
         password=DB_PASSWORD,
@@ -58,12 +58,13 @@ class Configs(BaseSettings):
     )
 
     # find query
-    PAGE = 1
-    PAGE_SIZE = 20
-    ORDERING = "-id"
+    PAGE: int = 1
+    PAGE_SIZE: int = 20
+    ORDERING: str = "-id"
 
     class Config:
         case_sensitive = True
+        extra = 'allow'  # Allow extra fields to be set on the model
 
 
 class TestConfigs(Configs):

@@ -2,6 +2,6 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.get("/example")
+@router.get("/")
 async def example_endpoint():
     return {"message": "This is an example endpoint"}

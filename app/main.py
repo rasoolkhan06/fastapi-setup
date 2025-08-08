@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from app.middleware.logging_middleware import LoggingMiddleware
 
 from app.api.v1.api_router import router as v1_routers
 from app.core.config import configs
@@ -14,6 +15,9 @@ class AppCreator:
             openapi_url=f"{configs.API}/openapi.json",
             version="0.0.1",
         )
+
+        # Add logging middleware
+        self.app.add_middleware(LoggingMiddleware)
 
         # set cors
         if configs.BACKEND_CORS_ORIGINS:
